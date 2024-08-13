@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Turnstile &dash; Dummy Login Demo</title>
+    <title>Turnstile &dash; Dummy Login Demo (Test)</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css"
@@ -65,7 +65,9 @@
   <body>
     <main class="form-signin">
       <form method="POST" action="/handler">
-        <h2 class="h3 mb-3 fw-normal">Turnstile &dash; Dummy Login Demo</h2>
+        <h2 class="h3 mb-3 fw-normal">
+          Turnstile &dash; Dummy Login Demo (Test)
+        </h2>
 
         <div class="form-floating">
           <input type="text" id="user" class="form-control" />
@@ -87,13 +89,11 @@
           <!-- The following line controls and configures the Turnstile widget. -->
           <div
             class="cf-turnstile"
-            data-sitekey="0x4AAAAAAAhMny_sYVPqN2SW"
+            data-sitekey="1x00000000000000000000AA"
             data-theme="auto"
-            data-size="normal"
-            data-action="login"
-            data-cdata="sessionid-123456789"
           ></div>
           <!-- end. -->
+           <!-- https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations -->
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">
           Sign in

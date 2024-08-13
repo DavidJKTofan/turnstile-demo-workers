@@ -1,4 +1,8 @@
 name = "turnstile-demo-workers"
-workers_dev = true
+workers_dev = false
 
 compatibility_date = "2022-09-26"
+
+routes = [
+  { pattern = "turnstile.cf-testing.com", custom_domain = true }
+]
