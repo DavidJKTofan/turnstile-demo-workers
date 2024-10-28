@@ -9,19 +9,28 @@ const SECRET_KEY = "ABCD";
 
 async function handlePost(request, secretKey) {
   const body = await request.formData();
+
+  // Get the form values
+  const username = body.get("username");
+  const password = body.get("password");
+  console.log("Form Data:", { username, password });
+  // Add username and password to headers
+  const headers = new Headers();
+  headers.append("username", username);
+  headers.append("password", password);
+
   // Turnstile injects a token in "cf-turnstile-response".
   const token = body.get("cf-turnstile-response");
   const ip = request.headers.get("CF-Connecting-IP");
 
-  console.log(body)
+  console.log(body);
 
   // Validate the token by calling the "/siteverify" API.
   let formData = new FormData();
   formData.append("secret", secretKey);
   formData.append("response", token);
   formData.append("remoteip", ip);
-
-  console.log(formData)
+  console.log(formData);
 
   const result = await fetch(
     "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -43,7 +52,11 @@ async function handlePost(request, secretKey) {
   // For this demo, we just echo the "/siteverify" response:
   return new Response(
     "Turnstile token successfully validated. \n" +
-      JSON.stringify(outcome, null, 2)
+      JSON.stringify(outcome, null, 2),
+    {
+      status: 200,
+      headers: headers, // Add form data to headers for Leaked Credentials Check
+    }
   );
 }
 
