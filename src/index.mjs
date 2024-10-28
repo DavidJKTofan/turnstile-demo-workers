@@ -5,7 +5,7 @@ import implicitTestRenderHtml from "./implicit-test.html";
 // This is the demo secret key. In prod, we recommend you store
 // your secret key(s) safely.
 const TEST_SECRET_KEY = "1x0000000000000000000000000000000AA"; // https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-const SECRET_KEY = "ABCD;";
+const SECRET_KEY = "ABCD";
 
 async function handlePost(request, secretKey) {
   const body = await request.formData();

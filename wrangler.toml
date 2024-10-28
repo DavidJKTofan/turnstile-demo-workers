@@ -7,5 +7,6 @@ routes = [
   { pattern = "turnstile.cf-testing.com", custom_domain = true },
   { pattern = "https://www.cf-testing.com/login*", zone_name = "cf-testing.com" },
   { pattern = "https://www.cf-testing.com/implicit*", zone_name = "cf-testing.com" },
-  { pattern = "https://www.cf-testing.com/explicit*", zone_name = "cf-testing.com" }
+  { pattern = "https://www.cf-testing.com/explicit*", zone_name = "cf-testing.com" },
+  { pattern = "https://www.cf-testing.com/handler*", zone_name = "cf-testing.com" }
 ]
