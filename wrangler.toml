@@ -1,9 +1,13 @@
 name = "turnstile-demo-workers"
 workers_dev = false
+preview_urls = false
 
-compatibility_date = "2022-09-26"
+main = "src/index.mjs"
+
+compatibility_date = "2025-04-21"
 
 routes = [
+  { pattern = "turnstile.automatic-demo.com", custom_domain = true },
   { pattern = "turnstile.cf-testing.com", custom_domain = true },
   { pattern = "https://www.cf-testing.com/login*", zone_name = "cf-testing.com" },
   { pattern = "https://www.cf-testing.com/implicit*", zone_name = "cf-testing.com" },

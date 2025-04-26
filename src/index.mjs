@@ -2,10 +2,20 @@ import explicitRenderHtml from "./explicit.html";
 import implicitRenderHtml from "./implicit.html";
 import implicitTestRenderHtml from "./implicit-test.html";
 
-// This is the demo secret key. In prod, we recommend you store
-// your secret key(s) safely.
-const TEST_SECRET_KEY = "1x0000000000000000000000000000000AA"; // https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-const SECRET_KEY = "ABCD";
+// This is the demo secret key for testing purposes
+const TEST_SECRET_KEY = "1x0000000000000000000000000000000AA";
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, CF-Turnstile-Response',
+};
+
+function handleOptions() {
+  return new Response(null, {
+    headers: corsHeaders,
+  });
+}
 
 async function handlePost(request, secretKey) {
   const body = await request.formData();
@@ -55,20 +65,27 @@ async function handlePost(request, secretKey) {
       JSON.stringify(outcome, null, 2),
     {
       status: 200,
-      headers: headers, // Add form data to headers for Leaked Credentials Check
+      headers: { ...headers, ...corsHeaders }, // Add CORS headers
     }
   );
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
+    // Handle CORS preflight requests
+    if (request.method === "OPTIONS") {
+      return handleOptions();
+    }
+
     const url = new URL(request.url);
     let body;
 
     if (request.method === "POST" && url.pathname === "/handler") {
+      
       // Determine the secret key based on the referring URL
       const referer = request.headers.get("Referer");
-      let secretKey = SECRET_KEY;
+      let secretKey = env.SECRET_KEY;
+      // console.log("secretKey", secretKey);
 
       if (referer && referer.includes("/implicit-test")) {
         secretKey = TEST_SECRET_KEY;
@@ -85,9 +102,11 @@ export default {
       body = implicitRenderHtml;
     }
 
+    // Add CORS headers to all responses
     return new Response(body, {
       headers: {
         "Content-Type": "text/html",
+        ...corsHeaders
       },
     });
   },
